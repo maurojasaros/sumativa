@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Define el conjunto de caracteres para el documento -->
+    <meta charset="UTF-8">
+    <!-- Controla la escala y el tamaño de la página en dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título de la página que aparece en la pestaña del navegador -->
+    <title>World Games</title>
+     
+    <!-- Enlaza el archivo CSS de Bootstrap desde una CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlaza el archivo CSS personalizado para estilos específicos de la página -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Barra de navegación superior -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Enlace a la página de inicio -->
+            <a class="navbar-brand" href="index.html">Inicio</a>
+            <!-- Botón para desplegar el menú en pantallas pequeñas -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Contenido del menú de navegación -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!-- Enlace al formulario de registro -->
+                        <a class="nav-link" href="formulario.html">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Enlace a la sección de contacto (vacío por ahora) -->
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenido principal de la página -->
+    <main class="container">
+        <!-- Sección del encabezado con título, imagen y descripción -->
+        <header class="text-center my-4">
+            <h1>World Games</h1> <!-- Título principal de la página -->
+            <img src="portada.jpg" alt="Logo de la pagina" class="img-fluid"> <!-- Imagen del logo, fluida para adaptarse al contenedor -->
+            <p>En esta página encontrarás juegos disponibles a muy buen precio.</p> <!-- Descripción breve -->
+        </header>
+
+        <!-- Sección del formulario de registro -->
+        <div class="container">
+            <h2 class="text-center my-8">Formulario de Registro World Games</h2>
+            <!-- Espacio para ajustar el ancho del formulario -->
+            <div class="col-md-8"></div>
+            <form id="registerForm" novalidate>
+                <!-- Campo para el nombre -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" placeholder="Ingrese su nombre" required>
+                    <div class="invalid-feedback" id="nameError">El nombre es obligatorio y debe contener solo letras</div>
+                </div>
+
+                <!-- Campo para el apellido -->
+                <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido" required>
+                    <div class="invalid-feedback" id="apellidoError">El apellido es obligatorio y debe contener solo letras</div>
+                </div>
+
+                <!-- Campo para el correo electrónico -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" placeholder="Ingrese su email: nombre@ejemplo.com" required>
+                    <div class="invalid-feedback" id="emailError">Ingrese un correo válido</div>
+                </div>
+
+                <!-- Campo para la contraseña -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+                    <div class="invalid-feedback" id="passwordError">La contraseña debe tener entre 6 y 18 caracteres, y contener al menos un número y una letra mayúscula.</div>
+                </div>
+    
+                <!-- Campo para confirmar la contraseña -->
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Vuelva a ingresar su contraseña" required>
+                    <div class="invalid-feedback" id="confirmPasswordError">Las contraseñas no coinciden.</div>
+                </div>
+
+                <!-- Campo para la fecha de nacimiento -->
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="dob" required>
+                    <div class="invalid-feedback" id="dobError">Debes ser mayor de 18 años.</div>
+                </div>
+
+                <!-- Campo para seleccionar la región -->
+                <div class="mb-3">
+                    <label for="region" class="form-label">Región</label>
+                    <select class="form-select" id="region" name="region" required>
+                        <option value="">Selecciona tu región</option>
+                    </select>
+                    <div class="invalid-feedback" id="regionError">Por favor selecciona región</div>
+                </div>
+
+                <!-- Campo para seleccionar la comuna -->
+                <div class="mb-3">
+                    <label for="comuna" class="form-label">Comuna</label>
+                    <select class="form-select" id="comuna" name="comuna" required>
+                        <option value="">Selecciona tu comuna</option>
+                    </select>
+                    <div class="invalid-feedback" id="comunaError">Por favor selecciona comuna</div>
+                </div>
+
+                <!-- Campos para dirección (calle y número) -->
+                <div class="mb-3">
+                    <label for="addres" class="form-label">Dirección</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="street" placeholder="Calle (opcional)">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="number" placeholder="Número (opcional)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo para departamento -->
+                <div class="mb-3"> 
+                    <input type="text" class="form-control" id="apartment" placeholder="Departamento (opcional)">
+                </div>
+
+                <!-- Botones para enviar o limpiar el formulario -->
+                <div class="d-grip gap-2">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="reset" class="btn btn-secondary">Limpiar</button>
+                </div> 
+            </form>
+        </div>
+
+        <!-- Botón para volver a la página de inicio -->
+        <div class="estilo-div mt-4">
+            <a href="index.html" class="btn btn-primary">Volver</a>
+        </div>
+
+        <!-- Modal para mostrar un mensaje de éxito después del envío del formulario -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                        <!-- Botón para cerrar el modal -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Formulario enviado correctamente
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Botón para cerrar el modal -->
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </main>
+    <!-- Enlaza el archivo JavaScript personalizado -->
+    <script src="scriptt.js"></script>
+    <!-- Enlaza el archivo JavaScript de Bootstrap desde una CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
