@@ -21,3 +21,6 @@ def shooter(request):
 
 def terror(request):
     return render(request,'juegos/terror.html')
+
+def inicio_sesion(request):
+    return render(request, 'juegos/inicio_sesion.html')
