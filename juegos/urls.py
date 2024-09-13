@@ -10,5 +10,6 @@ urlpatterns = [
     path('shooter/', views.shooter, name='shooter'),
     path('terror/', views.terror, name='terror'),
     path('inicio_sesion/', views.inicio_sesion, name='inicio_sesion'),
+   
 
 ]
