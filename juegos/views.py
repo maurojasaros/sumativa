@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import RegistroForm
 from .forms import JuegoForm #Tengo que hacer un formulario para cada juego
+from .models import Juego
 
 # Create your views here.
 def index(request):
