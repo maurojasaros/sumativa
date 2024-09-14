@@ -1,16 +1,11 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Juegos</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
+{% extends 'juegos/base_generic.html' %}
+
+{% block title %}Lista de Juegos{% endblock %}
+
+{% block content %}
     <h1>Lista de Juegos</h1>
     
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -40,7 +35,6 @@
     </table>
 
     {% if user.is_staff %}
-    <a href="{% url 'crear_juego' %}">Agregar nuevo juego</a>
+    <a href="{% url 'crear_juego' %}" class="btn btn-success">Agregar nuevo juego</a>
     {% endif %}
-</body>
-</html>
+{% endblock %}

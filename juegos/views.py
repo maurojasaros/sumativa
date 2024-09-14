@@ -95,7 +95,7 @@ def editar_juego(request, pk):
             return redirect('ver_juego', pk=juego.pk)
     else:
         form = JuegoForm(instance=juego)
-    return render(request, 'juegos/editar_juego.html', {'form': form})
+    return render(request, 'juegos/editar_juego.html', {'juego': juego, 'form': form})
 
 # Eliminar un juego
 @login_required       
