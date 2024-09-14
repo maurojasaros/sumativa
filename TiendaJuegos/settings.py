@@ -90,6 +90,16 @@ DATABASES = {
 
 }
 
+# Configuración del backend de correo
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Usamos el servidor SMTP de Gmail
+EMAIL_PORT = 587  # Puerto para TLS
+EMAIL_USE_TLS = True  # Habilitamos TLS para una conexión segura
+EMAIL_HOST_USER = 'worldgamess.1994@gmail.com'  # Reemplaza con tu dirección de correo, literal puse un correo real creado
+EMAIL_HOST_PASSWORD = 'zzDu*sup9294'  # Reemplaza con la contraseña de tu correo
+DEFAULT_FROM_EMAIL = 'juegos <worldgamess.1994@gmail.com>'  # Nombre y correo del remitente
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

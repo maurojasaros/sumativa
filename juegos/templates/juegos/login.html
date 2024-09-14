@@ -3,41 +3,43 @@
 {% block title %}Inicio de Sesión{% endblock %}
 
 {% block content %}
-    
-
-    <main class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <h2 class="text-center mb-4">Inicio de Sesión</h2>
-                
-                {% if user.is_authenticated %}
-                    <!-- Si el usuario ya está autenticado -->
-                    <div class="alert alert-info text-center">
-                        <p>Ya has iniciado sesión como <strong>{{ user.username }}</strong>.</p>
-                        <a href="{% url 'index' %}" class="btn btn-primary mt-3">Volver al inicio</a>
+<main class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <h2 class="text-center mb-4">Inicio de Sesión</h2>
+            
+            {% if user.is_authenticated %}
+                <!-- Si el usuario ya está autenticado -->
+                <div class="alert alert-info text-center">
+                    <p>Ya has iniciado sesión como <strong>{{ user.username }}</strong>.</p>
+                    <a href="{% url 'index' %}" class="btn btn-primary mt-3">Volver al inicio</a>
+                </div>
+            {% else %}
+                <!-- Mostrar el formulario de inicio de sesión solo si el usuario no está autenticado -->
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
-                {% else %}
-                    <!-- Mostrar el formulario de inicio de sesión solo si el usuario no está autenticado -->
-                    <form method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Nombre de Usuario</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="mb-3 text-center">
-                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                        </div>
-                    </form>
-                {% endif %}
-            </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3 text-center">
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </div>
+                </form>
+                <!-- Botón de recuperación de contraseña -->
+                <div class="text-center mt-3">
+                    <a href="{% url 'password_reset' %}" class="btn btn-link">¿Olvidaste tu contraseña?</a>
+                </div>
+            {% endif %}
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="text-center my-4">
-        <p>@2024 World Games. Todos los derechos reservados.</p>
-    </footer>
+<footer class="text-center my-4">
+    <p>@2024 World Games. Todos los derechos reservados.</p>
+</footer>
 {% endblock %}

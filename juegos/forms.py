@@ -88,3 +88,46 @@ class CategoriaForm(forms.ModelForm):
         model = Categoria
         fields = ['nombre', 'descripcion']
 
+
+class UserCreationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    password_confirmation = forms.CharField(widget=forms.PasswordInput, label='Confirmar contraseña')
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password_confirmation = cleaned_data.get('password_confirmation')
+
+        if password != password_confirmation:
+            raise forms.ValidationError("Las contraseñas no coinciden")
+        
+
+#from django.contrib.auth.forms import UserChangeForm
+
+#class PerfilForm(UserChangeForm):
+#    class Meta:
+#        model = User
+#        fields = ['username', 'email']
+
+#    def clean_username(self):
+#        username = self.cleaned_data.get('username')
+#        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+#            raise ValidationError("Este nombre de usuario ya está en uso.")
+#        return username
+
+#    def clean_email(self):
+#        email = self.cleaned_data.get('email')
+#        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
+#            raise ValidationError("Este correo electrónico ya está registrado.")
+#        return email
+    
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
