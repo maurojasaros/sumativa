@@ -186,22 +186,41 @@ def eliminar_categoria(request, pk):
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.contrib.auth.forms import UserCreationForm
 
+#@login_required
+#@user_passes_test(is_admin)
+#def crear_usuario(request):
+#    if request.method == 'POST':
+#        form = UserCreationForm(request.POST)
+#        if form.is_valid():
+#            username = form.cleaned_data.get('username')
+#            email = form.cleaned_data.get('email')
+#            password = form.cleaned_data.get('password')
+
+#            user = User.objects.create_user(username=username, email=email, password=password)
+#            user.save()
+#            return redirect('perfil_usuario')
+#    else:
+#        form = UserCreationForm()
+#    return render(request, 'juegos/crear_usuario.html', {'form': form})
+
+
+
+
 @login_required
 @user_passes_test(is_admin)
 def crear_usuario(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user.save()
+            form.save()
             return redirect('perfil_usuario')
     else:
         form = UserCreationForm()
     return render(request, 'juegos/crear_usuario.html', {'form': form})
+
+
+
+
 
 
 from django.contrib.auth.forms import UserChangeForm
@@ -214,7 +233,7 @@ def editar_usuario(request, pk):
         form = UserChangeForm(request.POST, instance=usuario)
         if form.is_valid():
             form.save()
-            return redirect('listar_usuarios')
+            return redirect('perfil_usuario')
     else:
         form = UserChangeForm(instance=usuario)
     return render(request, 'juegos/editar_usuario.html', {'form': form, 'usuario': usuario})
@@ -225,5 +244,5 @@ def eliminar_usuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         usuario.delete()
-        return redirect('listar_usuarios')
+        return redirect('perfil_usuario')
     return render(request, 'juegos/eliminar_usuario.html', {'usuario': usuario})
