@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 import re
-from .models import Juego
+from .models import Juego, Categoria
 
 class RegistroForm(forms.Form):
     nombre_usuario = forms.CharField(
@@ -82,4 +82,9 @@ class JuegoForm(forms.ModelForm):
     class Meta:
         model = Juego
         fields = ['nombre', 'descripcion', 'precio', 'categoria']
+
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre', 'descripcion']
 

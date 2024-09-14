@@ -1,14 +1,30 @@
 {% extends 'juegos/base_generic.html' %}
 {% load static %}
+
 {% block title %}World Games{% endblock %}
 
 {% block content %}
     <main class="container">
-        
         <h1 class="text-center">Bienvenido a nuestra página con muchos juegos disponibles</h1>
         
+        {% if request.user.is_authenticated %}
+            <div class="text-center my-4">
+                <a href="{% url 'listar_juegos' %}" class="btn btn-primary">Listar Juegos</a>
+            </div>
+        {% endif %}
+        
+        {% if request.user.is_superuser %}
+            <div class="text-center my-4">
+                <p>Eres un superusuario. Tienes acceso a funcionalidades avanzadas.</p>
+            </div>
+        {% else %}
+            <div class="text-center my-4">
+                <p>Eres un usuario normal. Disfruta de la aplicación.</p>
+            </div>
+        {% endif %}
+        
         <section>
-            <h2 class="text-center my-8">Categorías</h2>
+            <h2 class="text-center my-4">Categorías</h2>
             <ul class="row list-unstyled">
                 <li class="col-sm-6 col-md-4 mb-4">
                     <img src="{% static 'img/Terror.jpg' %}" alt="Logo juegos terror" class="img-fluid">
@@ -33,10 +49,10 @@
             </ul>
         </section>
     </main>
-    {% endblock %}
+{% endblock %}
 
-    {% block footer %}
-        <footer class="text-center my-4">
-            <p>@2024 World Games. Todos los derechos reservados.</p>
-        </footer>
-    {% endblock %}
+{% block footer %}
+    <footer class="text-center my-4">
+        <p>&copy; 2024 World Games. Todos los derechos reservados.</p>
+    </footer>
+{% endblock %}

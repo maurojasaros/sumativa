@@ -127,7 +127,7 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         # Si es superusuario, redirigir al panel de administración
         if self.request.user.is_superuser:
-            return '/admin/'  # Puedes redirigir a cualquier otra página especial para superusuarios
+            return reverse('index')  # Puedes redirigir a cualquier otra página especial para superusuarios
         # Si es un usuario normal, redirigir a la lista de productos
         return reverse('listar_juegos')
     
