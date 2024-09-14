@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import CustomLoginView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,7 +17,7 @@ urlpatterns = [
     path('juegos/ver/<int:pk>/',views.ver_juego, name='ver_juego'),
     path('juegos/editar/<int:pk>/', views.editar_juego, name='editar_juego'), #se especifica la primary key pk el id
     path('juegos/eliminar/<int:pk>/', views.eliminar_juego, name='eliminar_juego'), #se especifica la primary key pk el id
-    path('login/', auth_views.LoginView.as_view(template_name='juegos/login.html'), name='login'),
+    path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout')
 
    

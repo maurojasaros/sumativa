@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required 
@@ -6,10 +6,18 @@ from django.contrib import messages
 from .forms import RegistroForm
 from .forms import JuegoForm #Tengo que hacer un formulario para cada juego
 from .models import Juego
+from django.contrib.auth.views import LoginView
 
 
 # Create your views here.
+#def index(request):
+#    return render(request, 'juegos/index.html')
+
 def index(request):
+    if request.user.is_authenticated:
+        print(f"Usuario autenticado: {request.user.username}")
+    else:
+        print("El usuario no está autenticado.")
     return render(request, 'juegos/index.html')
 
 def formulario(request):
@@ -105,3 +113,14 @@ def eliminar_juego(request, pk):
         juego.delete()
         return redirect('listar_juegos')
     return render(request, 'juegos/eliminar_juego.html', {'juego': juego})
+
+
+class CustomLoginView(LoginView):
+    template_name = 'juegos/login.html'
+
+    def get_success_url(self):
+        # Si es superusuario, redirigir al panel de administración
+        if self.request.user.is_superuser:
+            return '/admin/'  # Puedes redirigir a cualquier otra página especial para superusuarios
+        # Si es un usuario normal, redirigir a la lista de productos
+        return reverse('listar_juegos')
