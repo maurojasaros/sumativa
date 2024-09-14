@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import RegistroForm
-from .models import JuegoForm #Tengo que hacer un formulario para cada juego
+from .forms import JuegoForm #Tengo que hacer un formulario para cada juego
 
 # Create your views here.
 def index(request):
