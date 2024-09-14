@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
 from .forms import RegistroForm
 from .forms import JuegoForm #Tengo que hacer un formulario para cada juego
 from .models import Juego
+
 
 # Create your views here.
 def index(request):
@@ -60,6 +62,7 @@ def inicio_sesion(request):
     return render(request, 'juegos/inicio_sesion.html')
 
 # Listar juegos
+@login_required       
 def listar_juegos(request):
     juegos = Juego.objects.all()
     return render(request, 'juegos/listar_juegos.html', {'juegos': juegos})
@@ -70,6 +73,7 @@ def ver_juego(request, pk):
     return render(request, 'juegos/ver_juego.html', {'juego': juego})
 
 # Crear un nuevo juego
+@login_required       
 def crear_juego(request):
     if request.method == 'POST':
         form = JuegoForm(request.POST)
@@ -81,6 +85,7 @@ def crear_juego(request):
     return render(request, 'juegos/crear_juego.html', {'form': form})
 
 # Editar un juego existente
+@login_required       
 def editar_juego(request, pk):
     juego = get_object_or_404(Juego, pk=pk)
     if request.method == 'POST':
@@ -93,6 +98,7 @@ def editar_juego(request, pk):
     return render(request, 'juegos/editar_juego.html', {'form': form})
 
 # Eliminar un juego
+@login_required       
 def eliminar_juego(request, pk):
     juego = get_object_or_404(Juego, pk=pk)
     if request.method == 'POST':

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'listar_juegos' #despues de iniciar sesion nos va a redirigir a productos
+LOGOUT_REDIRECT_URL = 'home' #despues de cerrar sesión, nos va a redirigir a home
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
