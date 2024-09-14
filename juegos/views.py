@@ -9,15 +9,6 @@ from .models import Juego
 from django.contrib.auth.views import LoginView
 
 
-
-
-#def index(request):
-#    if request.user.is_authenticated:
-#        print(f"Usuario autenticado: {request.user.username}")
-#    else:
-#        print("El usuario no está autenticado.")
-#    return render(request, 'juegos/index.html')
-
 @login_required
 def index(request):
     context = {
@@ -146,3 +137,93 @@ def perfil_usuario(request):
         'usuarios': usuarios,
     }
     return render(request, 'juegos/perfil.html', context)
+
+from django.contrib.auth.decorators import user_passes_test
+from .forms import CategoriaForm
+
+# Verifica si el usuario es administrador
+def is_admin(user):
+    return user.is_superuser
+
+@user_passes_test(is_admin)
+def crear_categoria(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_categorias')  # Redirige a la página donde se listan las categorías
+    else:
+        form = CategoriaForm()
+    return render(request, 'juegos/crear_categoria.html', {'form': form})
+from .models import Categoria
+
+@user_passes_test(is_admin)
+def listar_categorias(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'juegos/listar_categorias.html', {'categorias': categorias})
+
+@user_passes_test(is_admin)
+def editar_categoria(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_categorias')  # Redirigir a la lista de categorías después de editar
+    else:
+        form = CategoriaForm(instance=categoria)
+    return render(request, 'juegos/editar_categoria.html', {'form': form, 'categoria': categoria})
+
+@user_passes_test(is_admin)
+def eliminar_categoria(request, pk):
+    categoria = get_object_or_404(Categoria, pk=pk)
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('listar_categorias')  # Redirige a la lista de categorías después de eliminar
+    return render(request, 'juegos/eliminar_categoria.html', {'categoria': categoria})
+
+
+from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from django.contrib.auth.forms import UserCreationForm
+
+@login_required
+@user_passes_test(is_admin)
+def crear_usuario(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+            return redirect('perfil_usuario')
+    else:
+        form = UserCreationForm()
+    return render(request, 'juegos/crear_usuario.html', {'form': form})
+
+
+from django.contrib.auth.forms import UserChangeForm
+
+@login_required
+@user_passes_test(is_admin)
+def editar_usuario(request, pk):
+    usuario = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_usuarios')
+    else:
+        form = UserChangeForm(instance=usuario)
+    return render(request, 'juegos/editar_usuario.html', {'form': form, 'usuario': usuario})
+
+@login_required
+@user_passes_test(is_admin)
+def eliminar_usuario(request, pk):
+    usuario = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        usuario.delete()
+        return redirect('listar_usuarios')
+    return render(request, 'juegos/eliminar_usuario.html', {'usuario': usuario})

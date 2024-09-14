@@ -1,0 +1,29 @@
+{% extends 'juegos/base_generic.html' %}
+
+{% block title %}Lista de Categorías{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Lista de Categorías</h2>
+    
+    <!-- Enlace para crear una categoría solo visible para superusuarios -->
+    {% if request.user.is_superuser %}
+        <div class="mb-3">
+            <a href="{% url 'crear_categoria' %}" class="btn btn-primary">Crear Categoría</a>
+        </div>
+    {% endif %}
+    
+    <ul>
+        {% for categoria in categorias %}
+            <li>
+                {{ categoria.nombre }} - {{ categoria.descripcion }}
+                <!-- Enlaces para editar y eliminar una categoría solo visibles para superusuarios -->
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'editar_categoria' categoria.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{% url 'eliminar_categoria' categoria.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

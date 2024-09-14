@@ -8,6 +8,11 @@
         <h1 class="text-center">Bienvenido a nuestra página con muchos juegos disponibles</h1>
         
         {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+                <div class="text-center my-4">
+                    <a href="{% url 'listar_categorias' %}" class="btn btn-secondary">Listar Categorías</a>
+                </div>
+            {% endif %}
             <div class="text-center my-4">
                 <a href="{% url 'listar_juegos' %}" class="btn btn-primary">Listar Juegos</a>
             </div>

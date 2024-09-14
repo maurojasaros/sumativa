@@ -11,9 +11,21 @@
 
     {% if user.is_superuser %}
         <h3>Eres superusuario. Aquí está la lista de todos los usuarios:</h3>
+        
+        <!-- Enlace para crear un nuevo usuario -->
+        <div class="mb-3">
+            <a href="{% url 'crear_usuario' %}" class="btn btn-primary">Crear Nuevo Usuario</a>
+        </div>
+        
+        <!-- Lista de usuarios -->
         <ul>
             {% for usuario in usuarios %}
-                <li>{{ usuario.username }}</li>
+                <li>
+                    {{ usuario.username }}
+                    <!-- Enlaces para editar y eliminar usuarios -->
+                    <a href="{% url 'editar_usuario' usuario.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{% url 'eliminar_usuario' usuario.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                </li>
             {% endfor %}
         </ul>
     {% else %}

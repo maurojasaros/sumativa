@@ -20,7 +20,13 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('perfil/', views.perfil_usuario, name='perfil_usuario'),
-
+    path('crear_categoria/', views.crear_categoria, name='crear_categoria'),
+    path('lista_categorias/', views.listar_categorias, name='listar_categorias'),
+    path('categorias/editar/<int:pk>/', views.editar_categoria, name='editar_categoria'),
+    path('categorias/eliminar/<int:pk>/', views.eliminar_categoria, name='eliminar_categoria'),
+    path('usuarios/crear/', views.crear_usuario, name='crear_usuario'),
+    path('usuarios/editar/<int:pk>/', views.editar_usuario, name='editar_usuario'),
+    path('usuarios/eliminar/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
    
 
 ]
