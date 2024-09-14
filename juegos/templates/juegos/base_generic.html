@@ -24,17 +24,31 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contacto</a>
                     </li>
-                    <!-- Condicional para mostrar los botones según el estado de autenticación -->
                     {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'perfil_usuario' %}">Mi Perfil</a>
+                        </li>
                         <li class="nav-item">
                             <form method="post" action="{% url 'logout' %}" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-link nav-link">Cerrar Sesión</button>
                             </form>
                         </li>
+                        {% if request.user.is_superuser %}
+                            <li class="nav-item">
+                                <span class="nav-link">Eres un superusuario.</span>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <span class="nav-link">Eres un usuario normal.</span>
+                            </li>
+                        {% endif %}
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'formulario' %}">Registrarse</a>
                         </li>
                     {% endif %}
                 </ul>

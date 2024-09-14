@@ -9,16 +9,22 @@ from .models import Juego
 from django.contrib.auth.views import LoginView
 
 
-# Create your views here.
+
+
 #def index(request):
+#    if request.user.is_authenticated:
+#        print(f"Usuario autenticado: {request.user.username}")
+#    else:
+#        print("El usuario no está autenticado.")
 #    return render(request, 'juegos/index.html')
 
+@login_required
 def index(request):
-    if request.user.is_authenticated:
-        print(f"Usuario autenticado: {request.user.username}")
-    else:
-        print("El usuario no está autenticado.")
-    return render(request, 'juegos/index.html')
+    context = {
+        'is_superuser': request.user.is_superuser,
+    }
+    return render(request,'juegos/index.html', context)
+
 
 def formulario(request):
     if request.method == 'POST':
@@ -124,3 +130,19 @@ class CustomLoginView(LoginView):
             return '/admin/'  # Puedes redirigir a cualquier otra página especial para superusuarios
         # Si es un usuario normal, redirigir a la lista de productos
         return reverse('listar_juegos')
+    
+
+from django.contrib.auth.models import User
+
+@login_required
+def perfil_usuario(request):
+    if request.user.is_superuser:
+        usuarios = User.objects.all()
+    else:
+        usuarios = None
+
+    context = {
+        'user': request.user,
+        'usuarios': usuarios,
+    }
+    return render(request, 'juegos/perfil.html', context)
