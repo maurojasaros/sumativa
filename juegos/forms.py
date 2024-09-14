@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 import re
+from .models import Juego
 
 class RegistroForm(forms.Form):
     nombre_usuario = forms.CharField(
@@ -76,3 +77,9 @@ class RegistroForm(forms.Form):
         if edad and edad < 18:
             raise ValidationError("Debes ser mayor de 18 años para registrarte.")
         return edad
+    
+class JuegoForm(forms.ModelForm):
+    class Meta:
+        model = Juego
+        fields = ['nombre', 'descripcion', 'precio', 'categoria']
+

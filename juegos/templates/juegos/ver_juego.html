@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Juego</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>{{ juego.nombre }}</h1>
+    <p><strong>Descripción:</strong> {{ juego.descripcion }}</p>
+    <p><strong>Precio:</strong> ${{ juego.precio }}</p>
+    <p><strong>Categoría:</strong> {{ juego.categoria.nombre }}</p>
+
+    {% if user.is_staff %}
+    <a href="{% url 'editar_juego' juego.pk %}">Editar</a>
+    | <a href="{% url 'eliminar_juego' juego.pk %}">Eliminar</a>
+    {% endif %}
+    
+    <a href="{% url 'listar_juegos' %}">Volver a la lista</a>
+</body>
+</html>
