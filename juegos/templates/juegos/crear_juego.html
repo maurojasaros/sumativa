@@ -1,22 +1,17 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Juego</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h1>Crear Nuevo Juego</h1>
+{% extends 'juegos/base_generic.html' %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
+{% block title %}Crear Nuevo Juego{% endblock %}
 
-        <button type="submit">Crear Juego</button>
-    </form>
+{% block content %}
+    <div class="container my-4">
+        <h1>Crear Nuevo Juego</h1>
 
-    <a href="{% url 'listar_juegos' %}">Volver a la lista de juegos</a>
-</body>
-</html>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Crear Juego</button>
+        </form>
+
+        <a href="{% url 'listar_juegos' %}" class="btn btn-secondary mt-3">Volver a la lista de juegos</a>
+    </div>
+{% endblock %}
