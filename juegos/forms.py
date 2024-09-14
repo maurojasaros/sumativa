@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 import re
-#hola
+
 class RegistroForm(forms.Form):
     nombre_usuario = forms.CharField(
         max_length=150,
@@ -73,6 +73,6 @@ class RegistroForm(forms.Form):
     # Validación de la edad
     def clean_edad(self):
         edad = self.cleaned_data.get('edad')
-        if edad < 18:
+        if edad and edad < 18:
             raise ValidationError("Debes ser mayor de 18 años para registrarte.")
         return edad
