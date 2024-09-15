@@ -17,6 +17,40 @@ def index(request):
     return render(request,'juegos/index.html', context)
 
 
+#def formulario(request):
+#    if request.method == 'POST':
+#        form = RegistroForm(request.POST)
+#        if form.is_valid():
+#            nombre_usuario = form.cleaned_data.get('nombre_usuario')
+#            nombre = form.cleaned_data.get('nombre')
+#            apellido = form.cleaned_data.get('apellido')
+#            email = form.cleaned_data.get('email')
+#            password = form.cleaned_data.get('password')
+
+#            # Crear el usuario en la base de datos
+#            user = User.objects.create_user(
+#                username=nombre_usuario,
+#                first_name=nombre,
+#                last_name=apellido,
+#                email=email,
+#                password=password
+#            )
+            
+#            # Crear un carrito para el usuario recién registrado
+#            Carrito.objects.create(usuario=user)
+            
+#            # Iniciar sesión automáticamente después del registro
+#            login(request, user)
+            
+#            messages.success(request, 'Registro completado con éxito. Has iniciado sesión automáticamente.')
+#            return redirect('index')  # Redirige a la página principal o a donde desees
+#        else:
+#            messages.error(request, 'Por favor corrige los errores.')
+#    else:
+#        form = RegistroForm()  # Si es una petición GET, crea un formulario vacío
+
+#    return render(request, 'juegos/formulario.html', {'form': form})
+
 def formulario(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
@@ -35,13 +69,13 @@ def formulario(request):
                 email=email,
                 password=password
             )
-            
+
             # Crear un carrito para el usuario recién registrado
             Carrito.objects.create(usuario=user)
-            
+
             # Iniciar sesión automáticamente después del registro
             login(request, user)
-            
+
             messages.success(request, 'Registro completado con éxito. Has iniciado sesión automáticamente.')
             return redirect('index')  # Redirige a la página principal o a donde desees
         else:
@@ -123,7 +157,7 @@ class CustomLoginView(LoginView):
         if self.request.user.is_superuser:
             return reverse('index')  # Puedes redirigir a cualquier otra página especial para superusuarios
         # Si es un usuario normal, redirigir a la lista de productos
-        return reverse('listar_juegos')
+        return reverse('index')
     
 
 from django.contrib.auth.models import User

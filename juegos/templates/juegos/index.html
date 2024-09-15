@@ -9,20 +9,22 @@
         
         {% if request.user.is_authenticated %}
             {% if request.user.is_superuser %}
+                <!-- Mensaje para superusuarios -->
+                <div class="text-center my-4">
+                    <p>Eres un superusuario. Tienes acceso a funcionalidades avanzadas.</p>
+                </div>
+
+                <!-- Botones de administración -->
                 <div class="text-center my-4">
                     <a href="{% url 'listar_categorias' %}" class="btn btn-secondary">Listar Categorías</a>
                 </div>
+                <div class="text-center my-4">
+                    <a href="{% url 'listar_juegos' %}" class="btn btn-primary">Listar Juegos</a>
+                </div>
             {% endif %}
-            <div class="text-center my-4">
-                <a href="{% url 'listar_juegos' %}" class="btn btn-primary">Listar Juegos</a>
-            </div>
         {% endif %}
         
-        {% if request.user.is_superuser %}
-            <div class="text-center my-4">
-                <p>Eres un superusuario. Tienes acceso a funcionalidades avanzadas.</p>
-            </div>
-        {% else %}
+        {% if not request.user.is_superuser %}
             <div class="text-center my-4">
                 <p>Eres un usuario normal. Disfruta de la aplicación.</p>
             </div>

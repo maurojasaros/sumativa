@@ -36,5 +36,8 @@
 
     {% if user.is_staff %}
     <a href="{% url 'crear_juego' %}" class="btn btn-success">Agregar nuevo juego</a>
+    <div class="mt-4 text-center"></div>
+        <a href="{% url 'index' %}" class="btn btn-primary">Volver</a>
+    </div>
     {% endif %}
 {% endblock %}

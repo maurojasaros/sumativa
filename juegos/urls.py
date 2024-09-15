@@ -6,22 +6,11 @@ from .views import CustomLoginView, agregar_al_carrito, ver_carrito, eliminar_de
 urlpatterns = [
     path('', views.index, name='index'),
     path('formulario/', views.formulario, name='formulario'),
-    #path('aventuras/', views.aventuras, name='aventuras'),
-    
-    path('deportes/', views.deportes, name='deportes'),
-    path('rpg/', views.rpg, name='rpg'),
-    path('shooter/', views.shooter, name='shooter'),
-    #path('terror/', views.terror, name='terror'),
     path('categoria/terror/', views.terror_view, name='categoria_terror'),
     path('categoria/aventuras/', views.aventuras_view, name='categoria_aventuras'),
     path('categoria/shooter/', views.shooter_view, name='categoria_shooter'),
     path('categoria/deportes/', views.deportes_view, name='categoria_deportes'),
     path('categoria/rpg/', views.rpg_view, name='categoria_rpg'),
-
-
-
-
-    path('inicio_sesion/', views.inicio_sesion, name='inicio_sesion'),
     path('lista_juegos/', views.listar_juegos, name='listar_juegos'),
     path('juegos/crear', views.crear_juego, name='crear_juego'),
     path('juegos/ver/<int:pk>/',views.ver_juego, name='ver_juego'),
