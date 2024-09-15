@@ -8,16 +8,19 @@
         <section>
             <h2 class="text-center my-8">Juegos de RPG</h2>
             <ul class="row list-unstyled">
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/final-fantasy.jpg' %}" alt="Final Fantasy XII" class="img-fluid">
-                    <p class="d-block text-center mt-2">Final Fantasy XII</p>
-                    <p class="d-block text-center mt-2">Precio: $89.990 CLP</p>
-                </li>
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/octopath-traveler.jpg' %}" alt="Octopath Traveler" class="img-fluid">
-                    <p class="d-block text-center mt-2">Octopath Traveler</p>
-                    <p class="d-block text-center mt-2">Precio: $39.990 CLP</p>
-                </li>
+                {% for juego in juegos %}
+                    <li class="col-sm-6 col-md-4 mb-4">
+                        <img src="{% static 'img/'|add:juego.nombre|add:'.jpg' %}" alt="{{ juego.nombre }}" class="img-fluid">
+                        <p class="d-block text-center mt-2">{{ juego.nombre }}</p>
+                        <p class="d-block text-center mt-2">Precio: ${{ juego.precio }} CLP</p>
+                        <!-- Botón para añadir al carrito -->
+                        <div class="text-center">
+                            <a href="{% url 'agregar_al_carrito' juego.id %}" class="btn btn-success">Añadir al Carrito</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p class="text-center">No hay juegos disponibles en la categoría de RPG</p>
+                {% endfor %}
             </ul>
         </section>
 

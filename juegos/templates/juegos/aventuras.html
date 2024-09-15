@@ -8,16 +8,17 @@
         <section>
             <h2 class="text-center my-8">Juegos de aventuras</h2>
             <ul class="row list-unstyled">
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/mario-bross.jpg' %}" alt="Mario Bros" class="img-fluid">
-                    <p class="d-block text-center mt-2">Mario Bros</p>
-                    <p class="d-block text-center mt-2">Precio: $99.990 CLP</p>
-                </li>
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/zelda.jpg' %}" alt="The Legend of Zelda" class="img-fluid">
-                    <p class="d-block text-center mt-2">The Legend of Zelda</p>
-                    <p class="d-block text-center mt-2">Precio: $49.990 CLP</p>
-                </li>
+                {% for juego in juegos %}
+                    <li class="col-sm-6 col-md-4 mb-4">
+                        <img src="{% static 'img/'|add:juego.nombre|add:'.jpg' %}" alt="{{ juego.nombre }}" class="img-fluid">
+                        <p class="d-block text-center mt-2">{{ juego.nombre }}</p>
+                        <p class="d-block text-center mt-2">Precio: ${{ juego.precio }} CLP</p>
+                        <!-- Botón para añadir al carrito -->
+                        <div class="text-center">
+                            <a href="{% url 'agregar_al_carrito' juego.id %}" class="btn btn-success">Añadir al Carrito</a>
+                        </div>
+                    </li>
+                {% endfor %}
             </ul>
         </section>
 

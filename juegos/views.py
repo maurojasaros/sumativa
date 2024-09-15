@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegistroForm
 from .forms import JuegoForm #Tengo que hacer un formulario para cada juego
-from .models import Juego
+from .models import Juego, Carrito, ItemCarrito, Pedido
 from django.contrib.auth.views import LoginView
 
 
@@ -35,6 +35,9 @@ def formulario(request):
                 email=email,
                 password=password
             )
+            
+            # Crear un carrito para el usuario recién registrado
+            Carrito.objects.create(usuario=user)
             
             # Iniciar sesión automáticamente después del registro
             login(request, user)
@@ -235,3 +238,83 @@ def editar_perfil(request):
     else:
         form = UserEditForm(instance=usuario)
     return render(request, 'juegos/editar_perfil.html', {'form': form})
+
+
+from django.shortcuts import render
+@login_required
+def ver_carrito(request):
+    carrito = get_object_or_404(Carrito, usuario=request.user)
+    items = ItemCarrito.objects.filter(carrito=carrito)
+    total = sum(item.juego.precio * item.cantidad for item in items)
+    
+    context = {
+        'items': items,
+        'total': total,
+    }
+
+    return render(request, 'juegos/ver_carrito.html', context)
+
+@login_required
+def agregar_al_carrito(request, juego_id):
+    juego = get_object_or_404(Juego, id=juego_id)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    
+    item_carrito, created = ItemCarrito.objects.get_or_create(
+        carrito=carrito,
+        juego=juego,
+        defaults={'cantidad': 1}
+    )
+    
+    if not created:
+        item_carrito.cantidad += 1
+        item_carrito.save()
+    
+    return redirect('ver_carrito')
+
+@login_required
+def eliminar_del_carrito(request, item_id):
+    item = get_object_or_404(ItemCarrito, id=item_id)
+    if item.carrito.usuario == request.user:
+        item.delete()
+    return redirect('ver_carrito')
+
+
+    
+def terror_view(request):
+    juegos = Juego.objects.filter(categoria__nombre="Terror")
+    return render(request, 'juegos/terror.html', {'juegos': juegos})
+
+def aventuras_view(request):
+    juegos = Juego.objects.filter(categoria__nombre='Aventuras')
+    return render(request, 'juegos/aventuras.html', {'juegos': juegos})
+
+def shooter_view(request):
+    juegos = Juego.objects.filter(categoria__nombre='Shooter')
+    return render(request, 'juegos/shooter.html', {'juegos': juegos})
+
+def deportes_view(request):
+    juegos = Juego.objects.filter(categoria__nombre='Deportes')
+    return render(request, 'juegos/deportes.html', {'juegos': juegos})
+
+def rpg_view(request):
+    juegos = Juego.objects.filter(categoria__nombre='RPG')
+    return render(request, 'juegos/rpg.html', {'juegos': juegos})
+
+@login_required
+def realizar_pedido(request):
+    carrito = get_object_or_404(Carrito, usuario=request.user)
+    
+    # Verificar si el carrito tiene elementos
+    if carrito.itemcarrito_set.exists():
+        # Crear un nuevo pedido para el carrito
+        pedido = Pedido.objects.create(carrito=carrito)
+        # Eliminar los elementos del carrito después de crear el pedido
+        carrito.itemcarrito_set.all().delete()
+        messages.success(request, 'Pedido realizado con éxito.')
+        return redirect('confirmacion_pedido', pedido_id=pedido.id)
+    else:
+        messages.info(request, 'Tu carrito está vacío.')
+        return redirect('ver_carrito')
+
+def confirmacion_pedido(request, pedido_id):
+    return render(request, 'juegos/confirmacion_pedido.html')

@@ -8,16 +8,19 @@
         <section>
             <h2 class="text-center my-8">Juegos shooter</h2>
             <ul class="row list-unstyled">
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/call-of-dutyy.jpg' %}" alt="Call of Duty" class="img-fluid">
-                    <p class="d-block text-center mt-2">Call of Duty</p>
-                    <p class="d-block text-center mt-2">Precio: $59.990 CLP</p>
-                </li>
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/halo.jpg' %}" alt="Halo" class="img-fluid">
-                    <p class="d-block text-center mt-2">Halo</p>
-                    <p class="d-block text-center mt-2">Precio: $39.990 CLP</p>
-                </li>
+                {% for juego in juegos %}
+                    <li class="col-sm-6 col-md-4 mb-4">
+                        <img src="{% static 'img/'|add:juego.nombre|add:'.jpg' %}" alt="{{ juego.nombre }}" class="img-fluid">
+                        <p class="d-block text-center mt-2">{{ juego.nombre }}</p>
+                        <p class="d-block text-center mt-2">Precio: ${{ juego.precio }} CLP</p>
+                        <!-- Botón para añadir al carrito -->
+                        <div class="text-center">
+                            <a href="{% url 'agregar_al_carrito' juego.id %}" class="btn btn-success">Añadir al Carrito</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p class="text-center">No hay juegos disponibles en la categoría de shooter</p>
+                {% endfor %}
             </ul>
         </section>
 

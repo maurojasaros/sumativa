@@ -32,11 +32,12 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nombre
 
+from django.contrib.auth.models import User
 class Carrito(models.Model):
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)  # Usa el modelo User de Django en lugar de tu modelo Usuario
     
     def __str__(self):
-        return f"Carrito de {self.usuario.nombre}"
+        return f"Carrito de {self.usuario.username}"
 
 class ItemCarrito(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
@@ -47,8 +48,8 @@ class ItemCarrito(models.Model):
         return f"{self.cantidad} x {self.juego.nombre} en carrito"
 
 class Pedido(models.Model):
-    carrito = models.OneToOneField(Carrito, on_delete=models.CASCADE)
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
     fecha_pedido = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"Pedido realizado el {self.fecha_pedido}"

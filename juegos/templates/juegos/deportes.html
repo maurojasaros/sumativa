@@ -8,16 +8,19 @@
         <section>
             <h2 class="text-center my-8">Juegos de deportes</h2>
             <ul class="row list-unstyled">
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/fifa23.jpg' %}" alt="Fifa 2023" class="img-fluid">
-                    <p class="d-block text-center mt-2">Fifa 2023</p>
-                    <p class="d-block text-center mt-2">Precio: $49.990 CLP</p>
-                </li>
-                <li class="col-sm-6 col-md-4 mb-4">
-                    <img src="{% static 'img/ufc.jpg' %}" alt="UFC" class="img-fluid">
-                    <p class="d-block text-center mt-2">UFC</p>
-                    <p class="d-block text-center mt-2">Precio: $49.990 CLP</p>
-                </li>
+                {% for juego in juegos %}
+                    <li class="col-sm-6 col-md-4 mb-4">
+                        <img src="{% static 'img/'|add:juego.nombre|add:'.jpg' %}" alt="{{ juego.nombre }}" class="img-fluid">
+                        <p class="d-block text-center mt-2">{{ juego.nombre }}</p>
+                        <p class="d-block text-center mt-2">Precio: ${{ juego.precio }} CLP</p>
+                        <!-- Botón para añadir al carrito -->
+                        <div class="text-center">
+                            <a href="{% url 'agregar_al_carrito' juego.id %}" class="btn btn-success">Añadir al Carrito</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <p class="text-center">No hay juegos disponibles en la categoría de deportes</p>
+                {% endfor %}
             </ul>
         </section>
 
